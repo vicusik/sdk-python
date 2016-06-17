@@ -16,8 +16,8 @@ from authorizenet.utility import *
 #from authorizenet.apicontractsv1 import CTD_ANON
 from authorizenet import utility
 
-class ApiTestBase(unittest.TestCase):
 
+class ApiTestBase(unittest.TestCase):
     def setUp(self):
         utility.helper.setpropertyfile('anet_python_sdk_properties.ini')
         
@@ -83,6 +83,3 @@ class ApiTestBase(unittest.TestCase):
         self.billTo.state = "WA"
         self.billTo.zip = "98122"
         self.billTo.country = "USA"
-       
-    
-        

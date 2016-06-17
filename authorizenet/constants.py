@@ -5,6 +5,17 @@ Created on Jun 8, 2015
 '''
 import logging
 
+RESULT_SUCCESS = 'Ok'
+
+TRANSACTION_APPROVED = 1
+TRANSACTION_DECLINED = 2
+TRANSACTION_ERROR = 3
+TRANSACTION_HELD = 4
+
+SANDBOX = 'https://apitest.authorize.net/xml/v1/request.api'
+PRODUCTION = 'https://api2.authorize.net/xml/v1/request.api'
+
+
 class constants(object):
     """All the constants are defined here
     Define all your constants instead of using magic numbers in the
@@ -12,8 +23,6 @@ class constants(object):
     """
     
     '''Environments'''
-    SANDBOX = 'https://apitest.authorize.net/xml/v1/request.api'
-    PRODUCTION = 'https://api2.authorize.net/xml/v1/request.api'
 
     '''xml encoding'''
     xml_encoding = 'utf-8'

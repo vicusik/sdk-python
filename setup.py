@@ -2,10 +2,7 @@
 """
 
 # Always prefer setuptools over distutils
-from setuptools import setup
-from setuptools import find_packages
-# To use a consistent encoding
-from codecs import open
+from setuptools import setup, find_packages
 from os import path
 
 here = path.abspath(path.dirname(__file__))
@@ -38,14 +35,9 @@ setup(
         #   4 - Beta
         #   5 - Production/Stable
         'Development Status :: 4 - Beta',
-
-        # Indicate who your project is intended for
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
-
-        # Pick your license as you wish (should match "license" above)
-        'License :: Other/Proprietary License',
-
+        'License :: OSI Approved :: MIT License',
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 2.7'
@@ -62,11 +54,10 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['pyxb', 'nose', 'mock'],
-	#install_requires=['nose'],
-	#install_requires=['nosetests'],
-	#install_requires=['mock'],
-	
+    install_requires=['PyXB>=1.2', 'lxml>=2.6', 'requests>=2.10'],
+
+    test_suite = 'tests',
+
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:

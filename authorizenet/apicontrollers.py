@@ -1,117 +1,39 @@
-'''
+"""
 Created on Nov 19, 2015
 
 @author: krgupta
-'''
-import logging
-from authorizenet.constants import constants
-from authorizenet import apicontractsv1
-from authorizenet import apicontrollersbase    
-class ARBCancelSubscriptionController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(ARBCancelSubscriptionController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'ARBCancelSubscriptionRequest'
+"""
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.ARBCancelSubscriptionResponse() 
-    
-class ARBCreateSubscriptionController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(ARBCreateSubscriptionController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'ARBCreateSubscriptionRequest'
+from .constants import constants
+from . import apicontractsv1
+from apicontrollersbase import APIOperationBase
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.ARBCreateSubscriptionResponse()
-     
-class ARBGetSubscriptionController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(ARBGetSubscriptionController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'ARBGetSubscriptionRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.ARBGetSubscriptionResponse() 
-class ARBGetSubscriptionListController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(ARBGetSubscriptionListController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'ARBGetSubscriptionListRequest'
+class ARBCancelSubscriptionController(APIOperationBase):
+    request_type = 'ARBCancelSubscriptionRequest'
+    response_class = apicontractsv1.ARBCancelSubscriptionResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.ARBGetSubscriptionListResponse() 
-    
-class ARBGetSubscriptionStatusController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(ARBGetSubscriptionStatusController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'ARBGetSubscriptionStatusRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.ARBGetSubscriptionStatusResponse()
-    
-    def afterexecute(self):
+class ARBCreateSubscriptionController(APIOperationBase):
+    request_type = 'ARBCreateSubscriptionRequest'
+    response_class = apicontractsv1.ARBCreateSubscriptionResponse
+
+
+class ARBGetSubscriptionController(APIOperationBase):
+    request_type = 'ARBGetSubscriptionRequest'
+    response_class = apicontractsv1.ARBGetSubscriptionResponse
+
+
+class ARBGetSubscriptionListController(APIOperationBase):
+    request_type = 'ARBGetSubscriptionListRequest'
+    response_class = apicontractsv1.ARBGetSubscriptionListResponse
+
+
+class ARBGetSubscriptionStatusController(APIOperationBase):
+    request_type = 'ARBGetSubscriptionStatusRequest'
+    response_class = apicontractsv1.ARBGetSubscriptionStatusResponse
+
+    def afterexecute(self, response):
         response = self._httpResponse
         if constants.note in response:
             response = response.replace(constants.note, '')
@@ -120,720 +42,174 @@ class ARBGetSubscriptionStatusController(apicontrollersbase.APIOperationBase):
             start = response.index(constants.StatusStart)
             end = response.index(constants.StatusEnd)
             response = response.replace(response[start:end+9], '')
+        return response
 
-        self._httpResponse = response
-        return
-     
-class ARBUpdateSubscriptionController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(ARBUpdateSubscriptionController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'ARBUpdateSubscriptionRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.ARBUpdateSubscriptionResponse() 
-    
-class authenticateTestController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(authenticateTestController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'authenticateTestRequest'
+class ARBUpdateSubscriptionController(APIOperationBase):
+    request_type = 'ARBUpdateSubscriptionRequest'
+    response_class = apicontractsv1.ARBUpdateSubscriptionResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.authenticateTestResponse() 
-    
-class createCustomerPaymentProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(createCustomerPaymentProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'createCustomerPaymentProfileRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.createCustomerPaymentProfileResponse() 
-    
-class createCustomerProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(createCustomerProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'createCustomerProfileRequest'
+class AuthenticateTestController(APIOperationBase):
+    request_type = 'authenticateTestRequest'
+    response_class = apicontractsv1.authenticateTestResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.createCustomerProfileResponse() 
-    
-class createCustomerProfileFromTransactionController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(createCustomerProfileFromTransactionController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'createCustomerProfileFromTransactionRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.createCustomerProfileResponse() 
-    
-class createCustomerProfileTransactionController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(createCustomerProfileTransactionController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'createCustomerProfileTransactionRequest'
+class CreateCustomerPaymentProfileController(APIOperationBase):
+    request_type = 'createCustomerPaymentProfileRequest'
+    response_class = apicontractsv1.createCustomerPaymentProfileResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.createCustomerProfileTransactionResponse() 
-    
-class createCustomerShippingAddressController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(createCustomerShippingAddressController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'createCustomerShippingAddressRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.createCustomerShippingAddressResponse() 
-    
-class createTransactionController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(createTransactionController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'createTransactionRequest'
+class CreateCustomerProfileController(APIOperationBase):
+    request_type = 'createCustomerProfileRequest'
+    response_class = apicontractsv1.createCustomerProfileResponse()
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.createTransactionResponse() 
-    
-class decryptPaymentDataController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(decryptPaymentDataController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'decryptPaymentDataRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.decryptPaymentDataResponse() 
-    
-class deleteCustomerPaymentProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(deleteCustomerPaymentProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'deleteCustomerPaymentProfileRequest'
+class CreateCustomerProfileFromTransactionController(APIOperationBase):
+    request_type = 'createCustomerProfileFromTransactionRequest'
+    response_class = apicontractsv1.createCustomerProfileResponse()
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.deleteCustomerPaymentProfileResponse() 
-    
-class deleteCustomerProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(deleteCustomerProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'deleteCustomerProfileRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.deleteCustomerProfileResponse() 
-    
-class deleteCustomerShippingAddressController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(deleteCustomerShippingAddressController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'deleteCustomerShippingAddressRequest'
+class CreateCustomerProfileTransactionController(APIOperationBase):
+    request_type = 'createCustomerProfileTransactionRequest'
+    response_class = apicontractsv1.createCustomerProfileTransactionResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.deleteCustomerShippingAddressResponse() 
-    
-class ErrorController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(ErrorController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'ErrorRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.ErrorResponse() 
-    
-class getBatchStatisticsController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getBatchStatisticsController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getBatchStatisticsRequest'
+class CreateCustomerShippingAddressController(APIOperationBase):
+    request_type = 'createCustomerShippingAddressRequest'
+    response_class = apicontractsv1.createCustomerShippingAddressResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getBatchStatisticsResponse() 
-    
-class getCustomerPaymentProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getCustomerPaymentProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getCustomerPaymentProfileRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getCustomerPaymentProfileResponse() 
-    
-class getCustomerPaymentProfileListController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getCustomerPaymentProfileListController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getCustomerPaymentProfileListRequest'
+class CreateTransactionController(APIOperationBase):
+    request_type = 'createTransactionRequest'
+    response_class = apicontractsv1.createTransactionResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getCustomerPaymentProfileListResponse() 
-    
-class getCustomerProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getCustomerProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getCustomerProfileRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getCustomerProfileResponse() 
-    
-class getCustomerProfileIdsController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getCustomerProfileIdsController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getCustomerProfileIdsRequest'
+class DecryptPaymentDataController(APIOperationBase):
+    request_type = 'decryptPaymentDataRequest'
+    response_class = apicontractsv1.decryptPaymentDataResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getCustomerProfileIdsResponse() 
-    
-class getCustomerShippingAddressController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getCustomerShippingAddressController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getCustomerShippingAddressRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getCustomerShippingAddressResponse() 
-    
-class getHostedProfilePageController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getHostedProfilePageController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getHostedProfilePageRequest'
+class DeleteCustomerPaymentProfileController(APIOperationBase):
+    request_type = 'deleteCustomerPaymentProfileRequest'
+    response_class = apicontractsv1.deleteCustomerPaymentProfileResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getHostedProfilePageResponse() 
-    
-class getSettledBatchListController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getSettledBatchListController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getSettledBatchListRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getSettledBatchListResponse() 
-    
-class getTransactionDetailsController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getTransactionDetailsController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getTransactionDetailsRequest'
+class DeleteCustomerProfileController(APIOperationBase):
+    request_type = 'deleteCustomerProfileRequest'
+    response_class = apicontractsv1.deleteCustomerProfileResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getTransactionDetailsResponse() 
-    
-class getTransactionListController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getTransactionListController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getTransactionListRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getTransactionListResponse() 
-    
-class getUnsettledTransactionListController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(getUnsettledTransactionListController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'getUnsettledTransactionListRequest'
+class DeleteCustomerShippingAddressController(APIOperationBase):
+    request_type = 'deleteCustomerShippingAddressRequest'
+    response_class = apicontractsv1.deleteCustomerShippingAddressResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.getUnsettledTransactionListResponse() 
-    
-class isAliveController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(isAliveController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'isAliveRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.isAliveResponse() 
-    
-class logoutController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(logoutController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'logoutRequest'
+class ErrorController(APIOperationBase):
+    request_type = 'ErrorRequest'
+    response_class = apicontractsv1.ErrorResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.logoutResponse() 
-    
-class mobileDeviceLoginController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(mobileDeviceLoginController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'mobileDeviceLoginRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.mobileDeviceLoginResponse() 
-    
-class mobileDeviceRegistrationController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(mobileDeviceRegistrationController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'mobileDeviceRegistrationRequest'
+class GetBatchStatisticsController(APIOperationBase):
+    request_type = 'getBatchStatisticsRequest'
+    response_class = apicontractsv1.getBatchStatisticsResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.mobileDeviceRegistrationResponse() 
-    
-class sendCustomerTransactionReceiptController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(sendCustomerTransactionReceiptController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'sendCustomerTransactionReceiptRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.sendCustomerTransactionReceiptResponse() 
-    
-class updateCustomerPaymentProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(updateCustomerPaymentProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'updateCustomerPaymentProfileRequest'
+class GetCustomerPaymentProfileController(APIOperationBase):
+    request_type = 'getCustomerPaymentProfileRequest'
+    response_class = apicontractsv1.getCustomerPaymentProfileResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.updateCustomerPaymentProfileResponse() 
-    
-class updateCustomerProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(updateCustomerProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'updateCustomerProfileRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.updateCustomerProfileResponse() 
-    
-class updateCustomerShippingAddressController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(updateCustomerShippingAddressController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'updateCustomerShippingAddressRequest'
+class GetCustomerPaymentProfileListController(APIOperationBase):
+    request_type = 'getCustomerPaymentProfileListRequest'
+    response_class = apicontractsv1.getCustomerPaymentProfileListResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.updateCustomerShippingAddressResponse()
-     
-class updateSplitTenderGroupController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(updateSplitTenderGroupController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'updateSplitTenderGroupRequest'
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.updateSplitTenderGroupResponse() 
-    
-class validateCustomerPaymentProfileController(apicontrollersbase.APIOperationBase):
-    
-    def __init__(self, apirequest):
-        super(validateCustomerPaymentProfileController, self).__init__(apirequest)
-        return 
-    
-    def validaterequest(self):
-        logging.debug('performing custom validation..') 
-        #validate required fields
-        #if (self._request.xyz == "null"):
-        #    raise ValueError('xyz is required')         
-        return
-    
-    def getrequesttype(self):
-        '''Returns request type''' 
-        return 'validateCustomerPaymentProfileRequest'
+class GetCustomerProfileController(APIOperationBase):
+    request_type = 'getCustomerProfileRequest'
+    response_class = apicontractsv1.getCustomerProfileResponse
 
-    def getresponseclass(self):
-        ''' Returns the response class '''
-        return apicontractsv1.validateCustomerPaymentProfileResponse() 
+
+class GetCustomerProfileIdsController(APIOperationBase):
+    request_type = 'getCustomerProfileIdsRequest'
+    response_class = apicontractsv1.getCustomerProfileIdsResponse
+
+
+class GetCustomerShippingAddressController(APIOperationBase):
+    request_type = 'getCustomerShippingAddressRequest'
+    response_class = apicontractsv1.getCustomerShippingAddressResponse
+
+
+class GetHostedProfilePageController(APIOperationBase):
+    request_type = 'getHostedProfilePageRequest'
+    response_class = apicontractsv1.getHostedProfilePageResponse
+
+
+class GetSettledBatchListController(APIOperationBase):
+    request_type = 'getSettledBatchListRequest'
+    response_class = apicontractsv1.getSettledBatchListResponse
+
+
+class GetTransactionDetailsController(APIOperationBase):
+    request_type = 'getTransactionDetailsRequest'
+    response_class = apicontractsv1.getTransactionDetailsResponse
+
+
+class GetTransactionListController(APIOperationBase):
+    request_type = 'getTransactionListRequest'
+    response_class = apicontractsv1.getTransactionListResponse
+
+
+class GetUnsettledTransactionListController(APIOperationBase):
+    request_type = 'getUnsettledTransactionListRequest'
+    response_class = apicontractsv1.getUnsettledTransactionListResponse
+
+
+class IsAliveController(APIOperationBase):
+    request_type = 'isAliveRequest'
+    response_class = apicontractsv1.isAliveResponse
+
+
+class LogoutController(APIOperationBase):
+    request_type = 'logoutRequest'
+    response_class = apicontractsv1.logoutResponse
+
+
+class MobileDeviceLoginController(APIOperationBase):
+    request_type = 'mobileDeviceLoginRequest'
+    response_class = apicontractsv1.mobileDeviceLoginResponse
+
+
+class MobileDeviceRegistrationController(APIOperationBase):
+    request_type = 'mobileDeviceRegistrationRequest'
+    response_class = apicontractsv1.mobileDeviceRegistrationResponse
+
+
+class SendCustomerTransactionReceiptController(APIOperationBase):
+    request_type = 'sendCustomerTransactionReceiptRequest'
+    response_class = apicontractsv1.sendCustomerTransactionReceiptResponse
+
+
+class UpdateCustomerPaymentProfileController(APIOperationBase):
+    request_type = 'updateCustomerPaymentProfileRequest'
+    response_class = apicontractsv1.updateCustomerPaymentProfileResponse
+
+
+class UpdateCustomerProfileController(APIOperationBase):
+    request_type = 'updateCustomerProfileRequest'
+    response_class = apicontractsv1.updateCustomerProfileResponse
+
+
+class UpdateCustomerShippingAddressController(APIOperationBase):
+    request_type = 'updateCustomerShippingAddressRequest'
+    response_class = apicontractsv1.updateCustomerShippingAddressResponse
+
+
+class UpdateSplitTenderGroupController(APIOperationBase):
+    request_type = 'updateSplitTenderGroupRequest'
+    response_class = apicontractsv1.updateSplitTenderGroupResponse
+
+
+class ValidateCustomerPaymentProfileController(APIOperationBase):
+    request_type = 'validateCustomerPaymentProfileRequest'
+    response_class = apicontractsv1.validateCustomerPaymentProfileResponse

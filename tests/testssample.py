@@ -15,6 +15,7 @@ import sys
 from tests import apitestbase
 from authorizenet import utility
 
+
 class test_ReadProperty(apitestbase.ApiTestBase):
     def testPropertyFromFile(self):
         login= utility.helper.getproperty("api.login.id")
@@ -41,7 +42,7 @@ class test_TransactionReportingUnitTest(apitestbase.ApiTestBase):
         createtransactionrequest.merchantAuthentication = self.merchantAuthentication
         createtransactionrequest.refId = "MerchantID-0001"
         createtransactionrequest.transactionRequest = transactionrequest
-        createtransactioncontroller = createTransactionController(createtransactionrequest)
+        createtransactioncontroller = CreateTransactionController(createtransactionrequest)
         createtransactioncontroller.execute()
         response = createtransactioncontroller.getresponse()
         if hasattr(response, 'messages') == True:
@@ -57,7 +58,7 @@ class test_TransactionReportingUnitTest(apitestbase.ApiTestBase):
         gettransactiondetailsrequest.merchantAuthentication = self.merchantAuthentication
         transactionID = self.testchargeCreditCard()
         gettransactiondetailsrequest.transId = transactionID #update valid transaction id
-        gettransactiondetailscontroller = getTransactionDetailsController(gettransactiondetailsrequest)
+        gettransactiondetailscontroller = GetTransactionDetailsController(gettransactiondetailsrequest)
         gettransactiondetailscontroller.execute()
         response =  gettransactiondetailscontroller.getresponse()
         if hasattr(response, 'messages') == True:
@@ -118,7 +119,7 @@ class test_paymentTransactionUnitTest(apitestbase.ApiTestBase):
         createtransactionrequest.merchantAuthentication = self.merchantAuthentication
         createtransactionrequest.refId = self.ref_id
         createtransactionrequest.transactionRequest = transactionrequesttype
-        createtransactioncontroller = createTransactionController(createtransactionrequest)
+        createtransactioncontroller = CreateTransactionController(createtransactionrequest)
         createtransactioncontroller.execute()
         response = createtransactioncontroller.getresponse()
         if hasattr(response, 'messages') == True:
@@ -141,7 +142,7 @@ class test_paymentTransactionUnitTest(apitestbase.ApiTestBase):
         createtransactionrequest.merchantAuthentication = self.merchantAuthentication
         createtransactionrequest.refId = self.ref_id
         createtransactionrequest.transactionRequest = transactionrequesttype
-        createtransactioncontroller = createTransactionController(createtransactionrequest)
+        createtransactioncontroller = CreateTransactionController(createtransactionrequest)
         createtransactioncontroller.execute()
         response = createtransactioncontroller.getresponse()
         if hasattr(response, 'messages') == True:
@@ -162,7 +163,7 @@ class test_CustomerProfile(apitestbase.ApiTestBase):
         createCustomerProfile.profile.merchantCustomerId = 'jdoe%s' % randomInt
         createCustomerProfile.profile.description = 'John Doe%s' % randomInt
         createCustomerProfile.profile.email = 'jdoe%s@mail.com' % randomInt
-        controller = createCustomerProfileController(createCustomerProfile)
+        controller = CreateCustomerProfileController(createCustomerProfile)
         controller.execute()
         response = controller.getresponse()
         if hasattr(response, 'messages') == True:
@@ -178,7 +179,7 @@ class test_CustomerProfile(apitestbase.ApiTestBase):
           
         CustomerProfileID = self.testCreateCustomerProfile()   
         getCustomerProfile.customerProfileId = CustomerProfileID 
-        controller = getCustomerProfileController(getCustomerProfile)
+        controller = GetCustomerProfileController(getCustomerProfile)
         controller.execute()
         response = controller.getresponse()
         self.assertEquals('Ok', response.messages.resultCode)
@@ -201,7 +202,7 @@ class test_CustomerProfile(apitestbase.ApiTestBase):
         CustomerProfileID = self.testCreateCustomerProfile() 
         shippingAddressRequest.customerProfileId = CustomerProfileID
         shippingAddressRequest.merchantAuthentication = self.merchantAuthentication
-        controller = createCustomerShippingAddressController(shippingAddressRequest)
+        controller = CreateCustomerShippingAddressController(shippingAddressRequest)
         controller.execute()
         response = controller.getresponse()
         if hasattr(response, 'messages') == True:
@@ -219,7 +220,7 @@ class test_CustomerProfile(apitestbase.ApiTestBase):
         getShippingAddress.customerProfileId = CustomerProfileID
         getShippingAddress.customerAddressId = createdShippingAddressId
         
-        getShippingAddressController = getCustomerShippingAddressController(getShippingAddress)
+        getShippingAddressController = GetCustomerShippingAddressController(getShippingAddress)
         getShippingAddressController.execute()
         response = getShippingAddressController.getresponse()
         if hasattr(response, 'messages') == True:
