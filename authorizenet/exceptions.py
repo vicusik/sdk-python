@@ -11,3 +11,7 @@ class AuthorizeResponseFailure(AuthorizeBase):
 class AuthorizeTransactionFailure(AuthorizeBase):
     def __init__(self, response):
         self.response = response
+
+
+class AuthorizeInvalidError(AuthorizeBase):
+    pass
