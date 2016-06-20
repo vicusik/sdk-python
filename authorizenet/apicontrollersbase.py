@@ -75,7 +75,7 @@ class APIOperationBase(object):
 
         response_object = apicontractsv1.CreateFromDocument(response.content)
 
-        if response_object.message.resultCode != constants.RESULT_SUCCESS:
+        if response_object.messages.resultCode != constants.RESULT_SUCCESS:
             raise AuthorizeTransactionFailure(response_object.transactionResponse)
 
         return response_object

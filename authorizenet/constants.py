@@ -13,7 +13,7 @@ TRANSACTION_ERROR = 3
 TRANSACTION_HELD = 4
 
 SANDBOX = 'https://apitest.authorize.net/xml/v1/request.api'
-PRODUCTION = 'https://api2.authorize.net/xml/v1/request.api'
+PRODUCTION = 'https://api.authorize.net/xml/v1/request.api'
 
 
 class constants(object):
