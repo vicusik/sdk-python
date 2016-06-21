@@ -1,5 +1,6 @@
 import os
 import unittest
+from lxml import etree
 
 from authorizenet import apicontractsv1
 from authorizenet import apicontrollers
@@ -75,8 +76,11 @@ class TestSandboxAPIOperationBase(unittest.TestCase):
         create_profile_request.profile = profile
 
         controller = apicontrollers.CreateCustomerProfileController(create_profile_request)
-        response = controller.execute()
 
+        response = controller.execute()
+        rc = etree.tostring(response.root)
+
+        response.get_element_text('ns:customerProfileId')
         # response.customerPaymentProfileIdList.numericString[0]
         print(response)
 

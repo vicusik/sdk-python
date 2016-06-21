@@ -62,12 +62,12 @@ class CreateCustomerPaymentProfileController(APIOperationBase):
 
 class CreateCustomerProfileController(APIOperationBase):
     request_type = 'createCustomerProfileRequest'
-    response_class = apicontractsv1.createCustomerProfileResponse()
+    response_class = apicontractsv1.createCustomerProfileResponse
 
 
 class CreateCustomerProfileFromTransactionController(APIOperationBase):
     request_type = 'createCustomerProfileFromTransactionRequest'
-    response_class = apicontractsv1.createCustomerProfileResponse()
+    response_class = apicontractsv1.createCustomerProfileResponse
 
 
 class CreateCustomerProfileTransactionController(APIOperationBase):

@@ -1,10 +1,35 @@
 from __future__ import unicode_literals
 
 import unittest
-from lxml import etree
+from lxml import etree, objectify
+
+from authorizenet import apicontractsv1
 
 
 class TestParseFailureResponse(unittest.TestCase):
+    def test_xml_parser(self):
+        xml = b"""<?xml version="1.0" encoding="utf-8"?>
+        <createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+            <messages>
+                <resultCode>Ok</resultCode>
+                <message>
+                    <code>I00001</code>
+                    <text>Successful.</text>
+                </message>
+            </messages>
+            <customerProfileId>41049270</customerProfileId>
+            <customerPaymentProfileIdList>
+                <numericString>37347079</numericString>
+                <numericString>37347080</numericString>
+            </customerPaymentProfileIdList>
+            <customerShippingAddressIdList/>
+            <validationDirectResponseList/>
+        </createCustomerProfileResponse>"""
+        xml_object = apicontractsv1.CreateFromDocument(xml, 'AnetApi/xml/v1/schema/AnetApiSchema.xsd')
+        xml2_object = objectify.fromstring(xml)
+        print xml_object
+
+
     def test_profile_response(self):
         """ Reference XML parsing code for controllers
         """
@@ -41,4 +66,3 @@ class TestParseFailureResponse(unittest.TestCase):
 
         self.assertEqual(code, 'E00029')
         self.assertEqual(text, 'Payment information is required.')
-

@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from lxml import etree
+from lxml import etree, objectify
 
 from . import apicontractsv1
 
@@ -9,7 +9,9 @@ class ApiResponse(object):
 
     def __init__(self, xml_string):
         self.root = etree.fromstring(xml_string, self.get_parser())
-        self.main_object = apicontractsv1.CreateFromDocument(xml_string)
+        # It is useless use apicontractsv1.CreateFromDocument to parse xml due bug inside parser
+        # Note: objectify can't handle <text> tags, so <messages> should be processing by xpath
+        self.api = objectify.fromstring(xml_string)
 
     @property
     def result_code(self):
