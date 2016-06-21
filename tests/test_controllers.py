@@ -54,7 +54,6 @@ class TestSandboxAPIOperationBase(unittest.TestCase):
         credit_card = CreditCard()
 
         profile = apicontractsv1.customerProfileType()
-        profile.customerType = 'individual'
         profile.merchantCustomerId = customer['ref_id']
         profile.description = '%s %s' % (customer['first_name'], customer['last_name'])
         profile.email = customer['email']
@@ -63,10 +62,13 @@ class TestSandboxAPIOperationBase(unittest.TestCase):
         card.cardNumber = credit_card['card_number']
         card.expirationDate = credit_card['expire_date'].strftime('%Y-%m')
 
-        payment = apicontractsv1.customerPaymentProfileType()
+        payment_profile = apicontractsv1.customerPaymentProfileType()
+        payment_profile.customerType = 'individual'
+        payment = apicontractsv1.paymentType()
         payment.creditCard = card
+        payment_profile.payment = payment
 
-        profile.paymentProfiles = [payment]
+        profile.paymentProfiles = [payment_profile]
 
         create_profile_request = apicontractsv1.createCustomerProfileRequest()
         create_profile_request.merchantAuthentication = self.merchant
@@ -75,6 +77,7 @@ class TestSandboxAPIOperationBase(unittest.TestCase):
         controller = apicontrollers.CreateCustomerProfileController(create_profile_request)
         response = controller.execute()
 
+        # response.customerPaymentProfileIdList.numericString[0]
         print(response)
 
 

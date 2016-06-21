@@ -7,11 +7,11 @@ Created on Nov 1, 2015
 import logging
 import xml.dom.minidom
 import requests
-from lxml import etree
 
 from . import constants
 from . import apicontractsv1
 from . import utility
+from .response import ApiResponse
 from .exceptions import AuthorizeTransactionFailure, AuthorizeResponseFailure
 
 
@@ -71,28 +71,15 @@ class APIOperationBase(object):
                          self.get_pretty_xml(xml_request))
             raise
 
-        parser = etree.XMLParser(
-                ns_clean=True,
-                no_network=True,
-                encoding='utf-8',
-                recover=True)
-
         if response.status_code != 200:
             logger.error("Authorize.net gateway response code %d", response.status_code)
             raise AuthorizeResponseFailure(response)
 
-        root = etree.fromstring(response.content, parser)
-        namespaces = {'ns': 'AnetApi/xml/v1/schema/AnetApiSchema.xsd'}
-        result_code = root.xpath('//ns:resultCode/text()', namespaces=namespaces)[0]
+        api_response = ApiResponse(response.content)
 
-        if result_code != constants.RESULT_SUCCESS:
+        if api_response.result_code != constants.RESULT_SUCCESS:
             # FIXME: at the moment finding only first error code
-            messages = root.xpath('//ns:messages/ns:message', namespaces=namespaces)
-            message = messages[0]
-            code = message.findtext('ns:code', namespaces=namespaces)
-            text = message.findtext('ns:text', namespaces=namespaces)
-            raise AuthorizeTransactionFailure(code, text)
+            message = api_response.get_messages()[0]
+            raise AuthorizeTransactionFailure(message['code'], message['text')
 
-        response_object = apicontractsv1.CreateFromDocument(response.content)
-
-        return response_object
+        return api_response
