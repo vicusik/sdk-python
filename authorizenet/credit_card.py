@@ -37,7 +37,7 @@ class CreditCard(object):
         self.card_number = re.sub(r'\D', '', str(card_number))
         self.exp_year = str(exp_year)
         self.exp_month = str(exp_month)
-        self.cvv = str(cvv)
+        self.cvv = cvv
         self.first_name = first_name
         self.last_name = last_name
         self.validate()
@@ -60,7 +60,7 @@ class CreditCard(object):
             raise AuthorizeInvalidError('Credit card number is not valid.')
         if datetime.now() > self.expiration:
             raise AuthorizeInvalidError('Credit card is expired.')
-        if self.cvv and not re.match(r'^[\d+]{3,4}$', self.cvv):
+        if self.cvv and not re.match(r'^[\d+]{3,4}$', str(self.cvv)):
             raise AuthorizeInvalidError('Credit card CVV is invalid format.')
         if not self.card_type:
             raise AuthorizeInvalidError('Credit card number is not valid.')
