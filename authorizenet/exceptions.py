@@ -18,9 +18,10 @@ class AuthorizeResponseFailure(AuthorizeBase):
 
 
 class AuthorizeTransactionFailure(AuthorizeBase):
-    def __init__(self, code, text):
+    def __init__(self, code, text, api_response):
         self.code = code
         self.text = text
+        self.api_response = api_response
 
     @property
     def message(self):

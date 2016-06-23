@@ -80,6 +80,9 @@ class APIOperationBase(object):
         if api_response.result_code != constants.RESULT_SUCCESS:
             # FIXME: at the moment finding only first error code
             message = api_response.get_messages()[0]
-            raise AuthorizeTransactionFailure(message['code'], message['text'])
+            raise AuthorizeTransactionFailure(
+                    message['code'],
+                    message['text'],
+                    api_response)
 
         return api_response
