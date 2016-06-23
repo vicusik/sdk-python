@@ -8,6 +8,7 @@ class ApiResponse(object):
     namespaces = {'ns': 'AnetApi/xml/v1/schema/AnetApiSchema.xsd'}
 
     def __init__(self, xml_string):
+        self.xml_string = xml_string
         self.root = etree.fromstring(xml_string, self.get_parser())
         # It is useless use apicontractsv1.CreateFromDocument to parse xml due bug inside parser
         # Note: objectify can't handle <text> tags, so <messages> should be processing by xpath
