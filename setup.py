@@ -54,7 +54,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['PyXB>=1.2', 'lxml>=2.6', 'requests>=2.10'],
+    install_requires=['PyXB==1.4', 'lxml>=2.6', 'requests>=2.10'],
 
     test_suite = 'tests',
 
