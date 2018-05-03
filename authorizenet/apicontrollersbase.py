@@ -13,7 +13,9 @@ from . import apicontractsv1
 from . import utility
 from .response import ApiResponse
 from .exceptions import AuthorizeTransactionFailure, AuthorizeResponseFailure
+import certifi
 
+DEFAULT_CA_BUNDLE_PATH = certifi.old_where()
 
 logger = logging.getLogger('authorizenet')
 
@@ -64,7 +66,8 @@ class APIOperationBase(object):
                 headers={'Content-Type': 'application/xml',
                          'version': '1.0',
                          'encoding': 'utf-8'},
-                proxies=proxy_data)
+                proxies=proxy_data,
+                verify=DEFAULT_CA_BUNDLE_PATH)
         except Exception:
             logger.error('Error retrieving http response from: %s for request: %s',
                          self.endpoint,
