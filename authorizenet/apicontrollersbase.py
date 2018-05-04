@@ -15,7 +15,7 @@ from .response import ApiResponse
 from .exceptions import AuthorizeTransactionFailure, AuthorizeResponseFailure
 import certifi
 
-DEFAULT_CA_BUNDLE_PATH = certifi.old_where()
+DEFAULT_CA_BUNDLE_PATH = certifi.where()
 
 logger = logging.getLogger('authorizenet')
 
